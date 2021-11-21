@@ -9,6 +9,8 @@
 
 import json
 import requests
+import numpy as np
+
 
 import matplotlib.pyplot as plt
 
@@ -27,8 +29,29 @@ if __name__ == '__main__':
     # del userId=1 al userId=10
     # 3) En cada entrada se especifica si el usuario completó ese título,
     # mediante el campo "completed".
+    
+    response = requests.get(url)
+    data = response.json()
 
-
+    true_complete = []
+    
+    for x in range(1,11):
+        
+         true_complete.append(np.sum([1 if d["completed"] == True and d["userId"]== x else 0 for d in data])) 
+    
+         
+        
+    x = [x for x in range (1,11)]
+    y = true_complete
+    
+    print(x)
+    print(y)
+    
+    fig = plt.figure()
+    ax = fig.add_subplot()
+    ax.bar(x,y)  
+    plt.show()
+      
     # Alumno, de cada usuario en el total de las 200 entradas
     # debe contar cuantos títulos completó cada usuario (de los 10 posibles)
     # y armar un gráfico de barras resumiendo la información.
